@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/mQuit"
+        android:title="Quit"
+        android:icon="@drawable/ic_menu_action_quit"
+        android:showAsAction="always"/>
+    <item android:id="@+id/mAbout"
+        android:icon="@drawable/ic_menu_action_about"
+        android:title="About"
+       />
+</menu>
