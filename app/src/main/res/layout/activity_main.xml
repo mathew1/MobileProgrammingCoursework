@@ -9,11 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Train Station App"
+        android:text="Train Station"
         android:id="@+id/textView"
-        android:layout_marginTop="40dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -22,13 +22,5 @@
         android:id="@+id/trainStatus"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="53dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:layout_marginTop="98dp"
-        android:layout_below="@+id/trainStatus"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginTop="69dp" />
 </RelativeLayout>
