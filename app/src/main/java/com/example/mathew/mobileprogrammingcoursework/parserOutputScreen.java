@@ -25,7 +25,7 @@ import java.util.LinkedList;
 /**
  * Created by Mathew on 02/12/2015.
  */
-public class parserOutputScreen extends Activity implements View.OnClickListener {
+public class parserOutputScreen extends Activity  {
 
 
     private TextView response;
@@ -41,7 +41,7 @@ public class parserOutputScreen extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parser_output);
 
-        LinkedList <trainData> alist = null;
+        LinkedList <trainData> alist;
 
         trainStationStatus = (ListView) findViewById(R.id.listView);
 
@@ -191,8 +191,5 @@ public class parserOutputScreen extends Activity implements View.OnClickListener
 
     } // End of sourceListingString
 
-    @Override
-    public void onClick(View v) {
 
-    }
 }

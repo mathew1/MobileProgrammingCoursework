@@ -20,6 +20,9 @@
             android:name=".parserOutputScreen"
             android:label="@string/app_name" />
 
+        <activity
+            android:name=".databaseOutputScreen"
+            android:label="@string/app_name" />
     </application>
 
 </manifest>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:id="@+id/imgViewTrainStation"
+        android:src="@drawable/glasgow_central"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:textColor="#556B2F"
+        android:id="@+id/trainStationTitle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:textColor="#5F9EA0"
+        android:id="@+id/trainStationAddress"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Main Page"
+        android:id="@+id/btnMainPage"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,23 +12,30 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import java.util.zip.Inflater;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
     Button trainStatus;
     FragmentManager fmAboutDialogue;
+    Spinner spinnerTrain;
+    databaseInfo trainDatabaseInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        spinnerTrain = (Spinner) findViewById(R.id.spinner);
+
         trainStatus = (Button) findViewById(R.id.trainStatus);
         trainStatus.setOnClickListener(this);
 
         fmAboutDialogue = this.getFragmentManager();
+
+        trainDatabaseInfo = new databaseInfo();
     }
 
     @Override
