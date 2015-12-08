@@ -18,7 +18,7 @@ import java.util.zip.Inflater;
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
-    Button trainStatus;
+    Button trainStatusBtn;
     FragmentManager fmAboutDialogue;
     Spinner spinnerTrain;
     databaseInfo trainDatabaseInfo;
@@ -30,8 +30,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         spinnerTrain = (Spinner) findViewById(R.id.spinner);
 
-        trainStatus = (Button) findViewById(R.id.trainStatus);
-        trainStatus.setOnClickListener(this);
+        trainStatusBtn = (Button) findViewById(R.id.trainStatus);
+        trainStatusBtn.setOnClickListener(this);
 
         fmAboutDialogue = this.getFragmentManager();
 
@@ -55,6 +55,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
       switch (item.getItemId()){
+          case R.id.mBio:
+              Intent mcBioDraw = new Intent(this, surfaceActivity.class);
+              this.startActivity(mcBioDraw);
+              return true;
           case R.id.mQuit:
               finish();
               return true;

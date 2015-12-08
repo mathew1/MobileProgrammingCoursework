@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -31,7 +32,7 @@ public class parserOutputScreen extends Activity  {
     private TextView response;
     private TextView errorText;
     private ListView trainStationStatus;
-    private String sourceListingURL = "http://rss.journeycheck.com/scotrail/?action=search&from=&to=&period=today&formTubeUpdateLocation=&formTubeUpdatePeriod=&savedRoute=";
+    private String sourceListingURL = "http://rss.journeycheck.com/scotrail/?action=search&from=&to=&period=today&formTubeUpdateLocation=&formTubeUpdatePeriod";
     LinkedList <trainData> alist;
     private String text;
 
@@ -41,7 +42,7 @@ public class parserOutputScreen extends Activity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parser_output);
 
-        LinkedList <trainData> alist;
+        LinkedList <trainData> alist = null;
 
         trainStationStatus = (ListView) findViewById(R.id.listView);
 
@@ -104,6 +105,7 @@ public class parserOutputScreen extends Activity  {
 
                     case XmlPullParser.END_TAG:
 
+                        Log.e("My Tag","ENdtag is working");
                         if(tagname.equalsIgnoreCase("item")) {
                             Log.e("MyTag","Item Start Tag found");
                             alist.add(train);
@@ -132,9 +134,10 @@ public class parserOutputScreen extends Activity  {
         catch(IOException ae)
         {
             // Handle error
-            response.setText("Error");
+//            response.setText("Error");
+            Log.e("parseData","error");
             // Add error info to log for diagnostics
-            errorText.setText(ae.toString());
+           // errorText.setText(ae.toString());
             Log.e("MyTag","IO error during parsing");
         }
         Log.e("MyTag","End document");
