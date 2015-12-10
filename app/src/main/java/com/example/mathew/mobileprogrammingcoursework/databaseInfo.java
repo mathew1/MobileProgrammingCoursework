@@ -10,7 +10,10 @@ public class databaseInfo implements Serializable {
     private int trainID;
     private String trainName;
     private String trainAddress;
-    private String trainImage;
+    private String trainPostCode;
+    private String trainCity;
+    private float Latitude;
+    private float Longitude;
 
     private static final long serialVersionUID = 0L;
 
@@ -29,18 +32,44 @@ public class databaseInfo implements Serializable {
 
     public void setTrainAddress(String trainAddress){this.trainAddress = trainAddress;}
 
-    public String getTrainImage(){return trainImage;}
+    public String getTrainPostCode() { return trainPostCode; }
 
-    public void setTrainImage(String trainImage){this.trainImage = trainImage;}
+    public void setTrainPostCode(String trainName){this.trainName = trainName;}
+
+    public String getTrainCity(){ return trainCity;}
+
+    public void setTrainCity(String trainCity) { this.trainCity = trainCity;}
+
+    public float getLatitude(){
+        return Latitude;
+    }
+
+    public void setLatitude(float Lat)
+    {
+        this.Latitude = Lat;
+    }
+
+    public float getLongitude()
+    {
+        return Longitude;
+    }
+
+    public void setLongitude(float Flongitude)
+    {
+        this.Longitude = Flongitude;
+    }
 
     @Override
     public String toString(){
-        String trainData;
-        trainData = "databaseInfo [trainID=" + trainID;
-        trainData = ", trainName=" + trainName;
-        trainData = ", trainAddress=" + trainAddress;
-        trainData = ", trainImage=" + trainImage;
-        return trainData;
+        String trainInfo;
+        trainInfo = "databaseInfo [trainstationID=" + trainID;
+        trainInfo = ", TrainStation=" + trainName;
+        trainInfo = ", TrainStationAddress=" + trainAddress;
+        trainInfo = ", TrainPostCode=" + trainPostCode;
+        trainInfo = ". TrainCity=" + trainCity;
+        trainInfo = ", latitude=" + Latitude;
+        trainInfo = ", longitude=" + Longitude +"]";
+        return trainInfo;
     }
 
 }

@@ -69,13 +69,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             Intent parserOutput_Screen = new Intent(getApplicationContext(), parserOutputScreen.class);
             startActivity(parserOutput_Screen);
                 break;
-            case R.id.trainInfo:
-                databaseInfoDBMgr dbTrainMgr = new databaseInfoDBMgr(this, "trainstations.s3db", null,1);
-                try{
-                    dbTrainMgr.dbCreate();
-                } catch (IOException e){
-                    e.printStackTrace();
-                }
+           // case R.id.trainInfo:
+            //    databaseInfoDBMgr dbTrainMgr = new databaseInfoDBMgr(this, "trainstations.s3db", null,1);
+             //   try{
+             //       dbTrainMgr.dbCreate();
+             //   } catch (IOException e){
+             //       e.printStackTrace();
+             //   }
 
         }
     }

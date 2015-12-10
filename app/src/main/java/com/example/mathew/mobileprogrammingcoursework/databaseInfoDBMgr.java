@@ -12,6 +12,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -27,7 +29,8 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
     public static final String COL_TRAINID= "trainstationID";
     public static final String COL_TRAINNAME = "TrainStation";
     public static final String COL_TRAINADDRESS = "TrainStationAddress";
-    public static final String COL_TRAINIMAGE = "TrainStationImage";
+    public static final String COL_LATITUDE = "latitude";
+    public static final String COL_LONGITUDE = "longitude";
     private final Context appContext;
 
     public databaseInfoDBMgr(Context context, String name, SQLiteDatabase.CursorFactory factory, int version)
@@ -39,12 +42,11 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_STARSIGNSINFO_TABLE = "CREATE TABLE IF NOT EXISTS " +
+        String CREATE_TRAININFO_TABLE = "CREATE TABLE IF NOT EXISTS " +
                 TBL_TRAININFO + "("
                 + COL_TRAINID + "INTEGER PRIMARY KEY," + COL_TRAINNAME
-                + "TEXT," + COL_TRAINIMAGE+ "TEXT," + COL_TRAINADDRESS + "TEXT,"
-                 + ")";
-        db.execSQL(CREATE_STARSIGNSINFO_TABLE);
+                + "TEXT," + COL_TRAINADDRESS + "TEXT,"  + COL_LATITUDE + "FLOAT" + COL_LONGITUDE + "FLOAT" +")";
+        db.execSQL(CREATE_TRAININFO_TABLE);
     }
 
     @Override
@@ -122,7 +124,8 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COL_TRAINNAME, aStarSignInfo.getTrainName());
         values.put(COL_TRAINADDRESS, aStarSignInfo.getTrainAddress());
-        values.put(COL_TRAINIMAGE, aStarSignInfo.getTrainImage());
+        values.put(COL_LATITUDE, aStarSignInfo.getLatitude());
+        values.put(COL_LONGITUDE, aStarSignInfo.getLongitude());
 
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -147,8 +150,8 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
             StarSignsInfo.setTrainID(Integer.parseInt(cursor.getString(0)));
             StarSignsInfo.setTrainName(cursor.getString(1));
             StarSignsInfo.setTrainAddress(cursor.getString(2));
-            StarSignsInfo.setTrainImage(cursor.getString(3));
-
+            StarSignsInfo.setLatitude(Float.parseFloat(cursor.getString(5)));
+            StarSignsInfo.setLongitude(Float.parseFloat(cursor.getString(6)));
             cursor.close();
 
         }
@@ -179,6 +182,34 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
         }
         db.close();
         return result;
+    }
+
+    public List<databaseInfo> allMapData()
+    {
+        String query = "Select * FROM " + TBL_TRAININFO;
+        List<databaseInfo> mcMapDataList = new ArrayList<databaseInfo>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            while (cursor.isAfterLast()==false) {
+                databaseInfo StarSignsInfo = new databaseInfo();
+
+                StarSignsInfo.setTrainID(Integer.parseInt(cursor.getString(0)));
+                StarSignsInfo.setTrainName(cursor.getString(1));
+                StarSignsInfo.setTrainAddress(cursor.getString(2));
+               StarSignsInfo.setLatitude(Float.parseFloat(cursor.getString(3)));
+                StarSignsInfo.setLongitude(Float.parseFloat(cursor.getString(4)));
+                mcMapDataList.add(StarSignsInfo);
+                cursor.moveToNext();
+            }
+        } else {
+            mcMapDataList.add(null);
+        }
+        db.close();
+        return mcMapDataList;
     }
 
 

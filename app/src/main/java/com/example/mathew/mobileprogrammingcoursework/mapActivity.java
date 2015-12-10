@@ -1,9 +1,11 @@
 package com.example.mathew.mobileprogrammingcoursework;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.pm.ActivityInfo;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -18,153 +20,99 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Mathew on 08/12/2015.
  */
-public class mapActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks {
+public class mapActivity extends FragmentActivity  {
 
-    private static final int ERROR_DIALOG_REQUEST = 1 ;
-    //map object
-    GoogleMap mMap;
-    GoogleApiClient mGoogleApiClient;
-    //Location object used for getting latitude and longitude
-    Location mLastLocation;
+    List<databaseInfo> mapDataList;
+    private Marker[] mapDataMarkerList = new Marker[10];
+    private GoogleMap mapStarSigns;
+   private float markerColours[] = {210.0f, 120.0f, 300.0f, 330.0f, 270.0f,
+            340.0f, 350.0f, 360.0f, 370.0f, 380.0f};
 
+    private LatLng latlangEKCentre = new LatLng(55.7591402, -4.1883331);
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.map_view);
-        buildGoogleApiClient();
 
-    }
-
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-
-                .addApi(LocationServices.API)
-                .build();
-    }
-
-    private void gotoLocation(double lat,double lng,float zoom) {
-        LatLng latLng=new LatLng(lat,lng);
-        CameraUpdate update= CameraUpdateFactory.newLatLngZoom(latLng, zoom);
-        mMap.moveCamera(update);
-    }
-
-    /*
-    Checking the google play services is available
-     */
-    private boolean checkServices() {
-        //returns a integer value
-        int isAvailable= GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        //if connection is available
-        if (isAvailable== ConnectionResult.SUCCESS){
-            return true;
-        }else if (GooglePlayServicesUtil.isUserRecoverableError(isAvailable)){
-            Dialog dialog= GooglePlayServicesUtil.getErrorDialog(isAvailable, this, ERROR_DIALOG_REQUEST);
-            dialog.show();
-        }else {
-            Toast.makeText(mapActivity.this, "Cannot connnect to mapping Service", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
-
-    /*
-    Initializing the map
-     */
-    private boolean initMap() {
-        if (mMap == null) {
-            SupportMapFragment mapFragment= (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-            mMap=mapFragment.getMap();
-        }
-        return (mMap!=null);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        mapDataList = new ArrayList<databaseInfo>();
+        databaseInfoDBMgr mapDB = new databaseInfoDBMgr(this, "trainstations.s3db", null,1);
+        try{
+            mapDB.dbCreate();
+        }catch (IOException e)
+        {
+            e.printStackTrace();
         }
 
-        return super.onOptionsItemSelected(item);
+        mapDataList = mapDB.allMapData();
+        SetUpMap();
+        AddMarkers();
     }
 
-    @Override
-    public void onConnected(Bundle bundle) {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLastLocation != null) {
-            //getting the latitude value
-            double latitudeValue=mLastLocation.getLatitude();
-            //getting the longitude value
-            double longitudeValue=mLastLocation.getLongitude();
-            if(checkServices()){
-                if(initMap()){
-                    //update the map with the current location
-                    gotoLocation(latitudeValue, longitudeValue, 15);
+    public void SetUpMap()
+    {
+        mapStarSigns = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        if (mapStarSigns != null){
+            mapStarSigns.moveCamera(CameraUpdateFactory.newLatLngZoom(latlangEKCentre,  12));
+            mapStarSigns.setMyLocationEnabled(true);
+            mapStarSigns.getUiSettings().setCompassEnabled(true);
+            mapStarSigns.getUiSettings().setMyLocationButtonEnabled(true);
+            mapStarSigns.getUiSettings().setRotateGesturesEnabled(true);
+        }
+    }
 
-                    // Other supported types include: MAP_TYPE_NORMAL,
-                    // MAP_TYPE_TERRAIN, MAP_TYPE_HYBRID and MAP_TYPE_NONE
-                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                    //mMap.setMyLocationEnabled(true);
+    public void AddMarkers()
+    {
+        MarkerOptions marker;
+        databaseInfo mapData;
+        String mrkTitle;
+        String mrkText;
 
-                    //Setting up the marker
-                    MarkerOptions marker= new MarkerOptions()
-                            .title("Glasgow Central")
-                            .position(new LatLng(55.860515, -4.256242))
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.maker_maker));
-                    mMap.addMarker(marker);
-                }
-            }
+        for(int i = 0; i < mapDataList.size(); i++)
+        {
+            mapData = mapDataList.get(i);
+            mrkTitle = mapData.getTrainName();
+            mrkText = "Train Address: " + mapData.getTrainAddress();
+            marker = SetMarker(mrkTitle,mrkText,new LatLng(mapData.getLatitude(), mapData.getLongitude()),markerColours[1], true);
+            mapDataMarkerList[i] = mapStarSigns.addMarker(marker);
+        }
+    }
+
+    public MarkerOptions SetMarker(String title, String snippet, LatLng position, float markerColour, boolean centreAnchor)
+    {
+        float anchorX;
+        float anchorY;
+
+        if(centreAnchor)
+        {
+            anchorX = 0.5f;
+            anchorY = 0.5f;
+        }
+        else
+        {
+            anchorX = 0.5f;
+            anchorY = 1.0f;
         }
 
-    }
+        MarkerOptions marker = new MarkerOptions().title(title).snippet(snippet).icon(BitmapDescriptorFactory.defaultMarker(markerColour)).anchor(anchorX, anchorY).position(position);
 
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.d("GettingLocation", "onConnectionFailed");
-    }
-
-
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d("GettingLocation", "onConnectionFailed");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mGoogleApiClient.connect();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
+        return marker;
     }
 }
 
