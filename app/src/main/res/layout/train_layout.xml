@@ -4,64 +4,28 @@
     android:layout_height="match_parent" >
 
 
-
-
     <TextView
-        android:id="@+id/train_Title"
+        android:id="@+id/trainTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textSize="20sp"
-        />
-
+        android:textColor="#000000"
+        android:text="Train" />
     <TextView
-        android:id="@+id/Description"
-
-        android:layout_width="wrap_content"
-        android:layout_height="26dip"
-
-
-        android:layout_alignParentLeft="true"
-
-        android:textStyle="bold"
-        android:singleLine="true"
-        android:ellipsize="marquee"
-        android:layout_below="@id/train_Title"
-        />
-    <TextView
-        android:id="@+id/train_Description"
+        android:id="@+id/trainDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/train_Title"
-        android:layout_toRightOf="@id/Description"
-
-        android:singleLine="true"
-        android:ellipsize="marquee"
-        />
-
+        android:text="Train Description"
+        android:layout_below="@+id/trainTitle"
+        android:textColor="#000000"
+        android:layout_alignParentStart="true" />
     <TextView
-        android:id="@+id/pubDate"
-
-        android:layout_width="wrap_content"
-        android:layout_height="26dip"
-
-
-        android:layout_alignParentLeft="true"
-
-        android:textStyle="bold"
-        android:singleLine="true"
-        android:ellipsize="marquee"
-        android:layout_below="@id/Description"
-        />
-
-    <TextView
-        android:id="@+id/pub_Date"
+        android:id="@+id/trainPubDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/train_Description"
-        android:layout_toRightOf="@id/pubDate"
-
-        />
+        android:text="Train PubDate"
+        android:layout_below="@+id/trainDescription"
+        android:textColor="#000000"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

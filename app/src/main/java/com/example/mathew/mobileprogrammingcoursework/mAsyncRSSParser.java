@@ -5,12 +5,13 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 /**
  * Created by Mathew on 08/12/2015.
  */
 public class mAsyncRSSParser extends AsyncTask<String,
-        Integer, trainData> {
+        Integer, ArrayList<trainData>> {
     private Context appContext;
     private String urlRSSToParse;
 
@@ -30,20 +31,19 @@ public class mAsyncRSSParser extends AsyncTask<String,
                 Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    protected trainData doInBackground(String...
+   // @Override
+    protected ArrayList<trainData> doInBackground(String...
                                                    params)
     {
-       trainData parsedData;
+        ArrayList<trainData> trainItem = new ArrayList<trainData>();
         mRSSParser rssParser = new mRSSParser();
         try {
-            rssParser.parseRSSData(urlRSSToParse);
+           trainItem = rssParser.parseRSSData(urlRSSToParse);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        parsedData = rssParser.getRSSDataItem();
 
-        return parsedData;
+        return trainItem;
     }
 
 
@@ -52,7 +52,7 @@ public class mAsyncRSSParser extends AsyncTask<String,
     // When doInbackground has completed, the return
     //value from that method is passed into this event
     // handler.
-    @Override
+   // @Override
     protected void onPostExecute(trainData result) {
         // Message to indicate end of parsing
         Toast.makeText(appContext,"Parsing finished!",

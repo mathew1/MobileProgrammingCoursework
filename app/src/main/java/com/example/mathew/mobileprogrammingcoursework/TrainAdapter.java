@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -15,34 +16,29 @@ import java.util.LinkedList;
  */
 public class TrainAdapter extends ArrayAdapter<trainData> {
 
-    private LinkedList<trainData> alist;
+    private Context context;
+    private ArrayList<trainData> alist;
 
-    public TrainAdapter(Context context, int textViewResourceId, LinkedList<trainData> alist)
+    //Constructor
+    public TrainAdapter(Context context, ArrayList<trainData> alist)
     {
-     super(context, textViewResourceId, alist);
-        this.alist = alist;
+     super(context,R.layout.train_layout ,alist);
+     this.context = context;
+     this.alist = alist;
     }
-    @Override
+@Override
     public View getView(int pos, View convertView, ViewGroup parent) {
-        RelativeLayout row = (RelativeLayout) convertView;
-        if (null == row) {
-            //No recycled View, we have to inflate one.
-            LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = (RelativeLayout) inflater.inflate(R.layout.train_layout, parent, false);
-        }
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View row = inflater.inflate(R.layout.train_layout, parent, false);
 
-        TextView trainTitle = (TextView)row.findViewById(R.id.train_Title);
-        trainTitle.setText(getItem(pos).getTrainTitle());
+        TextView trainTitle = (TextView)row.findViewById(R.id.trainTitle);
+        trainTitle.setText(alist.get(pos).getTrainTitle());
 
-        TextView texttrainDescription = (TextView)row.findViewById(R.id.Description);
-        texttrainDescription.setText("Description:");
-        TextView trainDescription = (TextView)row.findViewById(R.id.train_Description);
-        trainDescription.setText(getItem(pos).getTrainDescription());
+        TextView trainDescription = (TextView)row.findViewById(R.id.trainDescription);
+        trainDescription.setText(alist.get(pos).getTrainDescription());
 
-        TextView textpubDate = (TextView)row.findViewById(R.id.pubDate);
-        textpubDate.setText("Publish Date:");
-        TextView pubDate = (TextView)row.findViewById(R.id.pub_Date);
-        pubDate.setText(getItem(pos).getTrainPubdate());
+        TextView pubDate = (TextView)row.findViewById(R.id.trainPubDate);
+        pubDate.setText(alist.get(pos).getTrainPubdate());
 
         return row;
     }

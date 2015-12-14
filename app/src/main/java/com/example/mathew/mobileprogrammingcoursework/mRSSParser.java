@@ -11,14 +11,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by Mathew on 08/12/2015.
  */
 public class mRSSParser {
     private trainData RSSDataItem;
+   ArrayList<trainData> trainItems = new ArrayList<trainData>();
 
     public void setRSSDataItem(String sItemData)
     {
@@ -38,12 +41,18 @@ public class mRSSParser {
         setRSSDataItem(null);
     }
 
-    public void parseRSSDataItem(XmlPullParser theParser, int theEventType)
+    public ArrayList<trainData> parseRSSDataItem(XmlPullParser theParser, int theEventType)
     {
+        RSSDataItem = new trainData();
         try
         {
             while (theEventType != XmlPullParser.END_DOCUMENT)
             {
+                if(RSSDataItem.getTrainPubdate() != "")
+                {
+                    trainItems.add(RSSDataItem);
+                    RSSDataItem = new trainData();
+                }
                 // Found a start tag
                 if(theEventType == XmlPullParser.START_TAG)
                 {
@@ -54,6 +63,7 @@ public class mRSSParser {
                         String temp = theParser.nextText();
                         // store data in class
                         RSSDataItem.setTrainTitle(temp);
+                        Log.e("MyTag", "trainTitle is" + temp);
                     }
                     else
                         // Check which Tag we have
@@ -63,6 +73,7 @@ public class mRSSParser {
                             String temp = theParser.nextText();
                             // store data in class
                             RSSDataItem.setTrainDescription(temp);
+                            Log.e("MyTag","trainDescription is" + temp);
                         }
                         else
                             // Check which Tag we have
@@ -72,6 +83,7 @@ public class mRSSParser {
                                 String temp = theParser.nextText();
                                 // store data in class
                                 RSSDataItem.setTrainPubdate(temp);
+                                Log.e("MyTag", "trainPubdate is" + temp);
                             }
                 }
 
@@ -90,12 +102,13 @@ public class mRSSParser {
         {
             Log.e("MyTag","IO error during parsing");
         }
-
+     return trainItems;
     }
 
-    public void parseRSSData(String RSSItemsToParse) throws MalformedURLException {
+    public ArrayList<trainData> parseRSSData(String RSSItemsToParse) throws MalformedURLException {
         URL rssURL = new URL(RSSItemsToParse);
         InputStream rssInputStream;
+        ArrayList<trainData> temp = new ArrayList<trainData>();
         try
         {
             XmlPullParserFactory parseRSSfactory = XmlPullParserFactory.newInstance();
@@ -105,7 +118,7 @@ public class mRSSParser {
             RSSxmlPP.setInput(new StringReader(xmlRSS));
             int eventType = RSSxmlPP.getEventType();
 
-            parseRSSDataItem(RSSxmlPP,eventType);
+            temp = parseRSSDataItem(RSSxmlPP,eventType);
 
         }
         catch (XmlPullParserException ae1)
@@ -117,7 +130,9 @@ public class mRSSParser {
             Log.e("MyTag","IO error during parsing");
         }
 
+
         Log.e("MyTag","End document");
+        return temp;
     }
 
     public InputStream getInputStream(URL url) throws IOException

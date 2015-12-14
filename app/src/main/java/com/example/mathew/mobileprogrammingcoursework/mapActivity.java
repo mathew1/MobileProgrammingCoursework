@@ -39,8 +39,7 @@ public class mapActivity extends FragmentActivity  {
     List<databaseInfo> mapDataList;
     private Marker[] mapDataMarkerList = new Marker[10];
     private GoogleMap mapStarSigns;
-   private float markerColours[] = {210.0f, 120.0f, 300.0f, 330.0f, 270.0f,
-            340.0f, 350.0f, 360.0f, 370.0f, 380.0f};
+   private float markerColours[] = {210.0f, 120.0f, 300.0f, 330.0f, 270.0f, 210.0f, 120.0f, 300.f, 330.0f, 270.0f};
 
     private LatLng latlangEKCentre = new LatLng(55.7591402, -4.1883331);
 
@@ -89,7 +88,7 @@ public class mapActivity extends FragmentActivity  {
             mapData = mapDataList.get(i);
             mrkTitle = mapData.getTrainName();
             mrkText = "Train Address: " + mapData.getTrainAddress();
-            marker = SetMarker(mrkTitle,mrkText,new LatLng(mapData.getLatitude(), mapData.getLongitude()),markerColours[1], true);
+            marker = SetMarker(mrkTitle,mrkText,new LatLng(mapData.getLatitude(), mapData.getLongitude()),markerColours[2], true);
             mapDataMarkerList[i] = mapStarSigns.addMarker(marker);
         }
     }
@@ -110,7 +109,7 @@ public class mapActivity extends FragmentActivity  {
             anchorY = 1.0f;
         }
 
-        MarkerOptions marker = new MarkerOptions().title(title).snippet(snippet).icon(BitmapDescriptorFactory.defaultMarker(markerColour)).anchor(anchorX, anchorY).position(position);
+        MarkerOptions marker = new MarkerOptions().title(title).snippet(snippet).icon(BitmapDescriptorFactory.fromResource(R.drawable.train_icon)).anchor(anchorX, anchorY).position(position);
 
         return marker;
     }
