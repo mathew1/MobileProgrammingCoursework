@@ -9,11 +9,12 @@ import android.view.SurfaceView;
  */
 public class surfaceView  extends SurfaceView implements SurfaceHolder.Callback
 {
+    //Variables
     private SurfaceHolder shBioSurface;
 
     surfaceThread drawingThread = null;
 
-
+//Constructor
     public surfaceView(Context context)
     {
         super(context);
@@ -23,12 +24,12 @@ public class surfaceView  extends SurfaceView implements SurfaceHolder.Callback
         setFocusable(true);
 
     }
-
+//Getter
     public surfaceThread getThread()
     {
         return drawingThread;
     }
-
+//Constructor
     @Override
     public void surfaceCreated(SurfaceHolder holder)
     {
@@ -36,14 +37,14 @@ public class surfaceView  extends SurfaceView implements SurfaceHolder.Callback
         drawingThread.setRunning(true);
         drawingThread.start();
     }
-
+//Constructor
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
     {
         drawingThread.setSurfaceSize(width,height);
 
     }
-
+//Makes Catch When Destroying Surface
     @Override
     public void surfaceDestroyed(SurfaceHolder holder)
     {

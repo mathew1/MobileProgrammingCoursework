@@ -14,6 +14,7 @@ import android.os.Bundle;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class mcAbout extends DialogFragment {
+    //The Dialogue When About is Pressed in Menu
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {

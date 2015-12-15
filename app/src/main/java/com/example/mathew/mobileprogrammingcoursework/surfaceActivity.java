@@ -9,6 +9,7 @@ import android.os.Bundle;
 /**
  * Created by Mathew on 07/12/2015.
  */
+//Call to Surface Activity
 public class surfaceActivity extends Activity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override

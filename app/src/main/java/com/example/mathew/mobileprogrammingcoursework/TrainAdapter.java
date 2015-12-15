@@ -15,7 +15,7 @@ import java.util.LinkedList;
  * Created by Mathew on 04/12/2015.
  */
 public class TrainAdapter extends ArrayAdapter<trainData> {
-
+//Variables
     private Context context;
     private ArrayList<trainData> alist;
 
@@ -26,6 +26,7 @@ public class TrainAdapter extends ArrayAdapter<trainData> {
      this.context = context;
      this.alist = alist;
     }
+    //Method to Get and Set positions of Data In the Rows of the ListView
 @Override
     public View getView(int pos, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

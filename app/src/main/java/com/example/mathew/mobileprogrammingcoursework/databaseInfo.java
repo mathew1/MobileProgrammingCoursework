@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Mathew on 05/12/2015.
  */
 public class databaseInfo implements Serializable {
-
+// Variables
     private int trainID;
     private String trainName;
     private String trainAddress;
@@ -14,7 +14,7 @@ public class databaseInfo implements Serializable {
     private String trainCity;
     private float Latitude;
     private float Longitude;
-
+//Getters and Setters
     private static final long serialVersionUID = 0L;
 
     public int getTrainID()
@@ -58,7 +58,7 @@ public class databaseInfo implements Serializable {
     {
         this.Longitude = Flongitude;
     }
-
+//Coverting to String
     @Override
     public String toString(){
         String trainInfo;

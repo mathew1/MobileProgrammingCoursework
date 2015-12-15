@@ -21,36 +21,17 @@ import java.util.zip.Inflater;
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
+    // Variables
     Button trainStatusBtn;
     Button trainInfoBtn;
     FragmentManager fmAboutDialogue;
-    Spinner spinnerTrain;
+
     databaseInfo trainDatabaseInfo;
-    String[] trains;
+    //Creating the Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        spinnerTrain = (Spinner) findViewById(R.id.spinner);
-
-
-        trains = getResources().getStringArray(R.array.train_stations);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, trains);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerTrain.setAdapter(dataAdapter);
-        spinnerTrain.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         trainStatusBtn = (Button) findViewById(R.id.trainStatus);
         trainStatusBtn.setOnClickListener(this);
@@ -62,6 +43,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         trainDatabaseInfo = new databaseInfo();
     }
+    //Functions when buttons are pressed
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -69,16 +51,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             Intent parserOutput_Screen = new Intent(getApplicationContext(), parserOutputScreen.class);
             startActivity(parserOutput_Screen);
                 break;
-           // case R.id.trainInfo:
-            //    databaseInfoDBMgr dbTrainMgr = new databaseInfoDBMgr(this, "trainstations.s3db", null,1);
-             //   try{
-             //       dbTrainMgr.dbCreate();
-             //   } catch (IOException e){
-             //       e.printStackTrace();
-             //   }
-
+            case R.id.trainInfo:
+            Intent mapActivity_Screen = new Intent(getApplicationContext(),mapActivity.class);
+            startActivity(mapActivity_Screen);
+                break;
         }
     }
+    //Inflating mp_menu to create options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -89,7 +68,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
        // getMenuInflater().inflate(R.menu.mp_menu, menu);
         //return true;
     }
-
+    //Functions when items are selected.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

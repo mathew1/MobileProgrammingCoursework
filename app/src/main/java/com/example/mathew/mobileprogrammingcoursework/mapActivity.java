@@ -35,14 +35,15 @@ import java.util.List;
  * Created by Mathew on 08/12/2015.
  */
 public class mapActivity extends FragmentActivity  {
-
+//Variables
     List<databaseInfo> mapDataList;
     private Marker[] mapDataMarkerList = new Marker[10];
     private GoogleMap mapStarSigns;
+
    private float markerColours[] = {210.0f, 120.0f, 300.0f, 330.0f, 270.0f, 210.0f, 120.0f, 300.f, 330.0f, 270.0f};
 
-    private LatLng latlangEKCentre = new LatLng(55.7591402, -4.1883331);
-
+    private LatLng latlangEKCentre = new LatLng(55.859699, -4.258695);
+//On Creating the Scene
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -63,7 +64,7 @@ public class mapActivity extends FragmentActivity  {
         SetUpMap();
         AddMarkers();
     }
-
+// Setting up the Map
     public void SetUpMap()
     {
         mapStarSigns = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -73,9 +74,10 @@ public class mapActivity extends FragmentActivity  {
             mapStarSigns.getUiSettings().setCompassEnabled(true);
             mapStarSigns.getUiSettings().setMyLocationButtonEnabled(true);
             mapStarSigns.getUiSettings().setRotateGesturesEnabled(true);
+            mapStarSigns.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         }
     }
-
+// Adding Markers on the Map
     public void AddMarkers()
     {
         MarkerOptions marker;
@@ -92,7 +94,7 @@ public class mapActivity extends FragmentActivity  {
             mapDataMarkerList[i] = mapStarSigns.addMarker(marker);
         }
     }
-
+//Customising Markers
     public MarkerOptions SetMarker(String title, String snippet, LatLng position, float markerColour, boolean centreAnchor)
     {
         float anchorX;
@@ -109,7 +111,7 @@ public class mapActivity extends FragmentActivity  {
             anchorY = 1.0f;
         }
 
-        MarkerOptions marker = new MarkerOptions().title(title).snippet(snippet).icon(BitmapDescriptorFactory.fromResource(R.drawable.train_icon)).anchor(anchorX, anchorY).position(position);
+        MarkerOptions marker = new MarkerOptions().title(title).snippet(snippet).icon(BitmapDescriptorFactory.fromResource(R.drawable.train_icons)).anchor(anchorX, anchorY).position(position);
 
         return marker;
     }

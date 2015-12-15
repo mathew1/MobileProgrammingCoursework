@@ -20,9 +20,10 @@ import java.util.ArrayList;
  * Created by Mathew on 08/12/2015.
  */
 public class mRSSParser {
+    //variables
     private trainData RSSDataItem;
    ArrayList<trainData> trainItems = new ArrayList<trainData>();
-
+//getters and setters
     public void setRSSDataItem(String sItemData)
     {
         RSSDataItem.setTrainTitle(sItemData);
@@ -40,7 +41,7 @@ public class mRSSParser {
         this.RSSDataItem =  new trainData();
         setRSSDataItem(null);
     }
-
+//Parsing Data Item Function
     public ArrayList<trainData> parseRSSDataItem(XmlPullParser theParser, int theEventType)
     {
         RSSDataItem = new trainData();
@@ -104,7 +105,7 @@ public class mRSSParser {
         }
      return trainItems;
     }
-
+//Parsing DAta Function
     public ArrayList<trainData> parseRSSData(String RSSItemsToParse) throws MalformedURLException {
         URL rssURL = new URL(RSSItemsToParse);
         InputStream rssInputStream;
@@ -134,12 +135,12 @@ public class mRSSParser {
         Log.e("MyTag","End document");
         return temp;
     }
-
+// Get Url Conntection
     public InputStream getInputStream(URL url) throws IOException
     {
         return url.openConnection().getInputStream();
     }
-
+//Get String Name from input stream
     public static String getStringFromInputStream(InputStream stream, String charsetName) throws IOException
     {
         int n = 0;

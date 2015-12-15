@@ -20,7 +20,7 @@ import java.util.Locale;
  * Created by Mathew on 05/12/2015.
  */
 public class databaseInfoDBMgr extends SQLiteOpenHelper {
-
+//Variables
     private static final int DB_VER = 1;
     private static final String DB_PATH = "data/data/com.example.mathew.mobileprogrammingcoursework/databases/";
     private static final String DB_NAME = "trainstations.s3db";
@@ -32,14 +32,14 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
     public static final String COL_LATITUDE = "latitude";
     public static final String COL_LONGITUDE = "longitude";
     private final Context appContext;
-
+//Constructor
     public databaseInfoDBMgr(Context context, String name, SQLiteDatabase.CursorFactory factory, int version)
     {
         super(context, name, factory, version);
         this.appContext = context;
     }
 
-
+//Creating the Deatabase
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TRAININFO_TABLE = "CREATE TABLE IF NOT EXISTS " +
@@ -48,7 +48,7 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
                 + "TEXT," + COL_TRAINADDRESS + "TEXT,"  + COL_LATITUDE + "FLOAT" + COL_LONGITUDE + "FLOAT" +")";
         db.execSQL(CREATE_TRAININFO_TABLE);
     }
-
+//Updating Database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if(newVersion > oldVersion)
@@ -57,7 +57,7 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
             onCreate(db);
         }
     }
-
+//Copying Database
     public void dbCreate() throws IOException
     {
         boolean dbExist = dbCheck();
@@ -73,7 +73,7 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
             }
         }
     }
-
+//Checking Database Location
     private boolean dbCheck()
     {
         SQLiteDatabase db = null;
@@ -94,7 +94,7 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
         }
         return db !=null ? true : false;
     }
-
+// Copying Database From Assets
     private void copyDBFromAssets() throws IOException
     {
         InputStream dbInput = null;
@@ -119,6 +119,7 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
             throw new Error("Problems copying DB!");
         }
     }
+    //Adding Database Information
     public void addTrainInfoInfo(databaseInfo aStarSignInfo)
     {
         ContentValues values = new ContentValues();
@@ -133,7 +134,7 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
         db.insert(TBL_TRAININFO, null, values);
         db.close();
     }
-
+//Finding Specific Train Staiton
     public databaseInfo findTrainStation(String sTrainInfo)
     {
         String query = "Select * FROM " + TBL_TRAININFO + " WHERE " + COL_TRAINNAME + " =  \"" + sTrainInfo + "\"";
@@ -162,7 +163,7 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
         db.close();
         return StarSignsInfo;
     }
-
+// Removing Train Station
     public boolean removeTrainStation(String sStarSign)
     {
         boolean result = false;
@@ -183,7 +184,7 @@ public class databaseInfoDBMgr extends SQLiteOpenHelper {
         db.close();
         return result;
     }
-
+//Creating an array to store all Database Information
     public List<databaseInfo> allMapData()
     {
         String query = "Select * FROM " + TBL_TRAININFO;

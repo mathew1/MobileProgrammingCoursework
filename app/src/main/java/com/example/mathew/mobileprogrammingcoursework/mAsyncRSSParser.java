@@ -12,9 +12,10 @@ import java.util.ArrayList;
  */
 public class mAsyncRSSParser extends AsyncTask<String,
         Integer, ArrayList<trainData>> {
+    //variables
     private Context appContext;
     private String urlRSSToParse;
-
+//constructor
     public mAsyncRSSParser(Context currentAppContext,
                             String urlRSS)
     {
@@ -30,7 +31,7 @@ public class mAsyncRSSParser extends AsyncTask<String,
         Toast.makeText(appContext, "Parsing started!",
                 Toast.LENGTH_SHORT).show();
     }
-
+//Parsing in Background
    // @Override
     protected ArrayList<trainData> doInBackground(String...
                                                    params)

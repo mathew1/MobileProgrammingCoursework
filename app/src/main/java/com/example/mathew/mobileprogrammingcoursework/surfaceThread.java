@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
  * Created by Mathew on 07/12/2015.
  */
 public class surfaceThread extends Thread {
-
+// Variables
     private int canvasWidth;
     private int canvasHeight;
     private float xPos = 0.0f;
@@ -37,14 +37,14 @@ public class surfaceThread extends Thread {
     private SurfaceHolder shBioSurface;
     private Paint paintBio;
     private surfaceView bioSF;
-
+// Constructor
     public surfaceThread(SurfaceHolder surfaceHolder, surfaceView bioSurfV) {
         this.shBioSurface = surfaceHolder;
         this.bioSF = bioSurfV;
         paintBio = new Paint();
         cCalcDays = calcDays(cCurrentDay, cCurrentMonth+1, cCurrentYear);
     }
-
+//Start Drawing Thread
     public void doStart() {
         synchronized (shBioSurface) {
             int aDays = 1;
@@ -56,7 +56,7 @@ public class surfaceThread extends Thread {
 
         }
     }
-
+// Run drawing Thread
     public void run() {
         while (run) {
             Canvas c = null;
@@ -72,7 +72,7 @@ public class surfaceThread extends Thread {
             }
         }
     }
-
+//Getters and Setters
     public void setRunning(boolean b) {
         run = b;
     }
@@ -86,7 +86,7 @@ public class surfaceThread extends Thread {
         }
     }
 
-
+// Draw to The Canvas
     private void svDraw(Canvas canvas) {
         if(run) {
             canvas.save();
@@ -102,7 +102,7 @@ public class surfaceThread extends Thread {
             drawWave(canvas, 33);
         }
     }
-
+//Constructor
     private int calcDays(int cdDaysIn, int cdMonthIn, int cdYearIn)
     {
         int iNoLeapYears, iNoYears, iNoYearsAsDays, iCurrentDays, iNumDays, iDaysSince;
@@ -113,7 +113,7 @@ public class surfaceThread extends Thread {
         iNoYearsAsDays = iNoYears * 365;
         return iDaysSince = iNoYearsAsDays + iNumDays + cdDaysIn + iNoLeapYears;
     }
-
+// Wave Drawing
     public void drawWave(Canvas theCanvas, int period)
     {
         float xPosOld = 0.0f;
@@ -139,7 +139,7 @@ public class surfaceThread extends Thread {
             yPosOld = yPos;
         }
     }
-
+// Setting Colours and Drawing Lines
     public void drawAxes(Canvas theCanvas)
     {
         paintBio.setColor(Color.BLACK);

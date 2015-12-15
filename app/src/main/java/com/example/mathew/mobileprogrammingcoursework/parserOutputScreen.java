@@ -29,12 +29,12 @@ import java.util.concurrent.ExecutionException;
  * Created by Mathew on 02/12/2015.
  */
 public class parserOutputScreen extends Activity {
-
+//Variables
     private ListView trainStationStatus;
     //private String sourceListingURL = "http://rss.journeycheck.com/scotrail/?action=search&from=&to=&period=today&formTubeUpdateLocation=&formTubeUpdatePeriod";
     ArrayList<trainData> alist;
 
-
+// When the class is called to
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
